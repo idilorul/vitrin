@@ -19,4 +19,14 @@ public class ScreensController : ControllerBase
     {
         return Ok(_screens);
     }
+
+    [HttpGet("{id}")]
+    public ActionResult<Screen> GetById(int id)
+    {
+        var screen = _screens.FirstOrDefault(s => s.Id == id);
+
+        if (screen == null) {
+            return NotFound(); }// 1) ekran bulunamadıysa 404 döndür
+        return Ok(screen);// 2) bulunduysa ekranı döndür
+    }
 }
