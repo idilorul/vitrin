@@ -13,3 +13,15 @@ Content-Type: application/json
   "location": "-1. Kat",
   "isOnline": true
 }
+
+
+###
+
+PUT {{Vitrin.Api_HostAddress}}/api/screens/2
+Content-Type: application/json
+
+{
+  "name": "Kafeterya Ekranı",
+  "location": "3. Kat",
+  "isOnline": true
+}

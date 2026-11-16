@@ -38,4 +38,21 @@ public class ScreensController : ControllerBase
 
         return Ok(screen);
     }
+
+    [HttpPut("{id}")]
+    public ActionResult<Screen> Update(int id, Screen updated)
+    {
+        var screen = _screens.FirstOrDefault(s => s.Id == id);
+
+        if (screen == null)
+        {
+            return NotFound();
+        }
+
+        screen.Name = updated.Name;
+        screen.Location = updated.Location;
+        screen.IsOnline = updated.IsOnline;
+
+        return Ok(screen);
+    }
 }
