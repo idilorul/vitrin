@@ -25,3 +25,8 @@ Content-Type: application/json
   "location": "3. Kat",
   "isOnline": true
 }
+
+
+###
+
+DELETE {{Vitrin.Api_HostAddress}}/api/screens/3

@@ -26,8 +26,8 @@ public class ScreensController : ControllerBase
         var screen = _screens.FirstOrDefault(s => s.Id == id);
 
         if (screen == null) {
-            return NotFound(); }// 1) ekran bulunamadıysa 404 döndür
-        return Ok(screen);// 2) bulunduysa ekranı döndür
+            return NotFound(); }
+        return Ok(screen);
     }
             [HttpPost]
     public ActionResult<Screen> Create(Screen screen)
@@ -54,5 +54,20 @@ public class ScreensController : ControllerBase
         screen.IsOnline = updated.IsOnline;
 
         return Ok(screen);
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        var screen = _screens.FirstOrDefault(s => s.Id == id);
+
+        if (screen == null)
+        {
+            return NotFound();
+        }
+
+        _screens.Remove(screen);
+
+        return NoContent();
     }
 }
