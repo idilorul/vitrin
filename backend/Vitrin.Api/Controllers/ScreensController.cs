@@ -29,4 +29,13 @@ public class ScreensController : ControllerBase
             return NotFound(); }// 1) ekran bulunamadıysa 404 döndür
         return Ok(screen);// 2) bulunduysa ekranı döndür
     }
+            [HttpPost]
+    public ActionResult<Screen> Create(Screen screen)
+    {
+        screen.Id = _screens.Max(s => s.Id) + 1;
+        screen.CreatedAt = DateTime.UtcNow;
+        _screens.Add(screen);
+
+        return Ok(screen);
+    }
 }

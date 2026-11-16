@@ -4,3 +4,12 @@ GET {{Vitrin.Api_HostAddress}}/api/screens
 Accept: application/json
 
 ###
+
+POST {{Vitrin.Api_HostAddress}}/api/screens
+Content-Type: application/json
+
+{
+  "name": "Otopark Ekranı",
+  "location": "-1. Kat",
+  "isOnline": true
+}
