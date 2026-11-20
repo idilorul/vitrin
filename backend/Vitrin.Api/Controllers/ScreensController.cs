@@ -25,13 +25,15 @@ public class ScreensController : ControllerBase
     {
         var screen = _screens.FirstOrDefault(s => s.Id == id);
 
-        if (screen == null) {
-            return NotFound(); }
+        if (screen == null)
+        {
+            return NotFound();
+        }
         return Ok(screen);
     }
-            [HttpPost]
+    [HttpPost]
     public ActionResult<Screen> Create(Screen screen)
-    {
+    {   
         screen.Id = _screens.Max(s => s.Id) + 1;
         screen.CreatedAt = DateTime.UtcNow;
         _screens.Add(screen);
