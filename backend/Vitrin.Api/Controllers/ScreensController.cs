@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Vitrin.Api.Data;
 using Vitrin.Api.Models;
 
 namespace Vitrin.Api.Controllers;
@@ -7,6 +8,12 @@ namespace Vitrin.Api.Controllers;
 [Route("api/[controller]")]
 public class ScreensController : ControllerBase
 {
+        private readonly VitrinDbContext _db;
+
+    public ScreensController(VitrinDbContext db)
+    {
+        _db = db;
+    }
     private static readonly List<Screen> _screens = new()
     {
         new Screen { Id = 1, Name = "Lobi Ekranı", Location = "Giriş Katı", IsOnline = true, CreatedAt = DateTime.UtcNow },
@@ -17,13 +24,13 @@ public class ScreensController : ControllerBase
     [HttpGet]
     public ActionResult<List<Screen>> GetAll()
     {
-        return Ok(_screens);
+                return Ok(_db.Screens.ToList());
     }
 
     [HttpGet("{id}")]
     public ActionResult<Screen> GetById(int id)
     {
-        var screen = _screens.FirstOrDefault(s => s.Id == id);
+        var screen = _db.Screens.FirstOrDefault(s => s.Id == id);
 
         if (screen == null)
         {
@@ -34,9 +41,9 @@ public class ScreensController : ControllerBase
     [HttpPost]
     public ActionResult<Screen> Create(Screen screen)
     {   
-        screen.Id = _screens.Max(s => s.Id) + 1;
         screen.CreatedAt = DateTime.UtcNow;
-        _screens.Add(screen);
+        _db.Screens.Add(screen);
+        _db.SaveChanges();
 
         return Ok(screen);
     }
