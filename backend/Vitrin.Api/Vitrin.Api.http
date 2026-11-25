@@ -29,4 +29,4 @@ Content-Type: application/json
 
 ###
 
-DELETE {{host}}/api/screens/3
+DELETE {{host}}/api/screens/1

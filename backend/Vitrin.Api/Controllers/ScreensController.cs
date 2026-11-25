@@ -8,23 +8,18 @@ namespace Vitrin.Api.Controllers;
 [Route("api/[controller]")]
 public class ScreensController : ControllerBase
 {
-        private readonly VitrinDbContext _db;
+    private readonly VitrinDbContext _db;
 
     public ScreensController(VitrinDbContext db)
     {
         _db = db;
     }
-    private static readonly List<Screen> _screens = new()
-    {
-        new Screen { Id = 1, Name = "Lobi Ekranı", Location = "Giriş Katı", IsOnline = true, CreatedAt = DateTime.UtcNow },
-        new Screen { Id = 2, Name = "Kafeterya Ekranı", Location = "2. Kat", IsOnline = false, CreatedAt = DateTime.UtcNow },
-        new Screen { Id = 3, Name = "Toplantı Odası Ekranı", Location = "1. Kat", IsOnline = true, CreatedAt = DateTime.UtcNow },
-    };
+
 
     [HttpGet]
     public ActionResult<List<Screen>> GetAll()
     {
-                return Ok(_db.Screens.ToList());
+        return Ok(_db.Screens.ToList());
     }
 
     [HttpGet("{id}")]
@@ -40,7 +35,7 @@ public class ScreensController : ControllerBase
     }
     [HttpPost]
     public ActionResult<Screen> Create(Screen screen)
-    {   
+    {
         screen.CreatedAt = DateTime.UtcNow;
         _db.Screens.Add(screen);
         _db.SaveChanges();
@@ -69,14 +64,15 @@ public class ScreensController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var screen = _screens.FirstOrDefault(s => s.Id == id);
+        var screen = _db.Screens.FirstOrDefault(s => s.Id == id);
 
         if (screen == null)
         {
             return NotFound();
         }
 
-        _screens.Remove(screen);
+        _db.Screens.Remove(screen);
+        _db.SaveChanges();
 
         return NoContent();
     }
