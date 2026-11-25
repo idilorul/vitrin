@@ -51,7 +51,7 @@ public class ScreensController : ControllerBase
     [HttpPut("{id}")]
     public ActionResult<Screen> Update(int id, Screen updated)
     {
-        var screen = _screens.FirstOrDefault(s => s.Id == id);
+        var screen = _db.Screens.FirstOrDefault(s => s.Id == id);
 
         if (screen == null)
         {
@@ -62,6 +62,7 @@ public class ScreensController : ControllerBase
         screen.Location = updated.Location;
         screen.IsOnline = updated.IsOnline;
 
+        _db.SaveChanges();
         return Ok(screen);
     }
 
