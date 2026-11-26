@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Vitrin.Api.Data;
 using Vitrin.Api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Vitrin.Api.Controllers;
 
@@ -17,36 +18,33 @@ public class ScreensController : ControllerBase
 
 
     [HttpGet]
-    public ActionResult<List<Screen>> GetAll()
-    {
-        return Ok(_db.Screens.ToList());
-    }
+public async Task<ActionResult<List<Screen>>> GetAll()
+{
+    var screens = await _db.Screens.ToListAsync();
+    return Ok(screens);
+}
 
-    [HttpGet("{id}")]
-    public ActionResult<Screen> GetById(int id)
-    {
-        var screen = _db.Screens.FirstOrDefault(s => s.Id == id);
-
-        if (screen == null)
-        {
-            return NotFound();
-        }
-        return Ok(screen);
-    }
+[HttpGet("{id}")]
+public async Task<ActionResult<Screen>> GetById(int id)
+{
+    var screen = await _db.Screens.FirstOrDefaultAsync(s => s.Id == id);
+    if (screen == null) return NotFound();
+    return Ok(screen);
+}
     [HttpPost]
-    public ActionResult<Screen> Create(Screen screen)
+    public async Task<ActionResult<Screen>> Create(Screen screen)
     {
         screen.CreatedAt = DateTime.UtcNow;
         _db.Screens.Add(screen);
-        _db.SaveChanges();
+        await _db.SaveChangesAsync();
 
         return Ok(screen);
     }
 
     [HttpPut("{id}")]
-    public ActionResult<Screen> Update(int id, Screen updated)
+    public async Task<ActionResult<Screen>> Update(int id, Screen updated)
     {
-        var screen = _db.Screens.FirstOrDefault(s => s.Id == id);
+        var screen =await _db.Screens.FirstOrDefaultAsync(s => s.Id == id);
 
         if (screen == null)
         {
@@ -57,23 +55,17 @@ public class ScreensController : ControllerBase
         screen.Location = updated.Location;
         screen.IsOnline = updated.IsOnline;
 
-        _db.SaveChanges();
+       await _db.SaveChangesAsync();
         return Ok(screen);
     }
 
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
-    {
-        var screen = _db.Screens.FirstOrDefault(s => s.Id == id);
-
-        if (screen == null)
-        {
-            return NotFound();
-        }
-
-        _db.Screens.Remove(screen);
-        _db.SaveChanges();
-
-        return NoContent();
-    }
+   [HttpDelete("{id}")]
+public async Task<IActionResult> Delete(int id)
+{
+    var screen = await _db.Screens.FirstOrDefaultAsync(s => s.Id == id);
+    if (screen == null) return NotFound();
+    _db.Screens.Remove(screen);
+    await _db.SaveChangesAsync();
+    return NoContent();
+} 
 }

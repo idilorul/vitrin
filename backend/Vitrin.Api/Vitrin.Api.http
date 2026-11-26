@@ -1,6 +1,8 @@
 @host = http://localhost:5224
-
+###
 GET {{host}}/api/screens
+###
+GET {{host}}/api/screens/2
 Accept: application/json
 
 ###
@@ -17,7 +19,7 @@ Content-Type: application/json
 
 ###
 
-PUT {{host}}/api/screens/1
+PUT {{host}}/api/screens/2
 Content-Type: application/json
 
 {
@@ -29,4 +31,4 @@ Content-Type: application/json
 
 ###
 
-DELETE {{host}}/api/screens/1
+DELETE {{host}}/api/screens/2
