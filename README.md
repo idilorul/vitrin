@@ -43,8 +43,9 @@ flowchart LR
 ## Roadmap
 
 - [x] Project setup — ASP.NET Core Web API scaffold
-- [ ] Screens API — first domain model and CRUD endpoints
-- [ ] Database — PostgreSQL with EF Core migrations, media upload
+- [x] Screens API — first domain model and CRUD endpoints
+- [x] Database — PostgreSQL with EF Core migrations
+- [ ] Media upload — image/video library
 - [ ] Admin panel — React + TypeScript
 - [ ] Screen player + real-time content push (SignalR)
 - [ ] Playlists, scheduling, online/offline status
